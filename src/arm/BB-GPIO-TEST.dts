@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2012 Texas Instruments Incorporated - https://www.ti.com/
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		KJ-TEST.bb.org-overlays = __TIMESTAMP__;
+	};
+};
+
+/*
+ * Free up the pins used by the cape from the pinmux helpers.
+ */
+&ocp {
+	P8_03_pinmux { status = "disabled"; };
+	P8_04_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+	emmc_pins: pinmux_emmc_pins {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD6, PIN_INPUT_PULLUP, MUX_MODE7) /* P8_03, GPIO.NO 38 $PINS:6 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD7, PIN_OUTPUT_PULLDOWN, MUX_MODE7) /* P8_04 GPIO.NO 39 $PINS:7 */
+		>;
+	};
+};
+
+&gpio1 {
+	enable-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>,
+				   <&gpio1 7 GPIO_ACTIVE_HIGH>;
+};
