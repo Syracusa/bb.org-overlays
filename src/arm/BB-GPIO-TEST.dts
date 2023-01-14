@@ -18,14 +18,6 @@
 	};
 };
 
-/*
- * Free up the pins used by the cape from the pinmux helpers.
- */
-&ocp {
-	P8_03_pinmux { status = "disabled"; };
-	P8_04_pinmux { status = "disabled"; };
-};
-
 &am33xx_pinmux {
 	emmc_pins: pinmux_emmc_pins {
 		pinctrl-single,pins = <
